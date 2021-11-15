@@ -2,13 +2,29 @@ const http = require('http');
 const url = require('url');
 
 http.createServer((req, res) => {
-    console.log('Server created');
-    let urlRequest = url.parse(req.url, true);
-    console.log('urlRequest.query.id', urlRequest.query.id);
-    if (+urlRequest.query.id % 2 == 0) {
-        res.end('even');
-    } else {
-        res.end('odd');
+    let urlParts = url.parse(req.url);
+    console.log('urlParts', urlParts);
+    if (req.method == 'GET') {
+        switch (urlParts.pathname) {
+            case '/':
+                homaPage(req, res);
+                break;
+
+            case '/about': {
+                aboutPage(req, res);
+                break;
+            }
+        }
     }
-    console.log('urlRequest', urlRequest);
-}).listen(8000);
+}).listen(5000);
+console.log('Server is running');
+
+
+const homaPage = (req, res) => {
+    res.end('homaPage');
+}
+
+const aboutPage = (req, res) => {
+    res.end('aboutPage');
+}
+
