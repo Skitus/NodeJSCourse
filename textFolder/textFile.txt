@@ -1,2 +1,0 @@
-hello I am nodeJS
-I am the biggest back-end language

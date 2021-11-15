@@ -1,54 +1,24 @@
-console.log('hello NodeJS');
-
 const fs = require('fs');
+const readHuman = require('./human.json');
 
-const CODYING = 'utf-8';
+const human = {
+    name: 'Arthur',
+    age: 18,
+    mainLanguage: 'JS',
+    salary: 400
+};
 
-const readSystem = () => {
-    fs.readdir('loopFolder', (err, data) => {
+const createJsonFile = () => {
+    fs.writeFile('./human.json', JSON.stringify(human), (err) => {
         if (!err) {
-            console.log('success: ', data);
-            data.map((file) => {
-                console.log('file: ', file);
-                fs.readFile(`loopFolder/${file}`, CODYING, (err, data) => {
-                    console.log('===========');
-                    console.log(' success in file: ', data);
-                    console.log(' error in file:  ', err);
-                    console.log('===========');
-                });
-            });
+            console.log('file was created');
         } else {
-            console.log('error:  ', err);
+            console.log('file error', err);
         }
     })
-
 }
 
-const createSystem = (n) => {
-    if (fs.existsSync('loopFolder')){
-        readSystem();
-    } else {
-        fs.mkdir('loopFolder', (err) => {
-            if (!err) {
-                console.log('folder created');
-                for (let i = 0; i < n; i++) {
-                    fs.writeFile(`loopFolder/text_file_${i}.txt`, `text_${i}`, (err) => {
-                        if (!err) {
-                            console.log('file was created');
-                        } else {
-                            console.log('file error');
-                        }
-                    })
-                }
-                readSystem();
-            } else {
-                console.log('folder wasn`t created: ', err);
-            }
-        })
-    }
-}
-createSystem(5);
+createJsonFile();
 
 
-
-
+console.log('human', readHuman);
